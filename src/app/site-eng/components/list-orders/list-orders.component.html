@@ -24,9 +24,9 @@
         <td>{{ item.progress }}</td>
 
         <td>
-          <button class="btn btn-danger">Delete</button>
+          <button class="btn btn-danger" (click)="onDelete(i)">Delete</button>
           <button
-            routerLink="/orders-list/details"
+            routerLink="/orders-list/details/{{ item.id }}"
             class="btn btn-primary"
             data-toggle="modal"
             data-target="#staticBackdrop"
@@ -38,6 +38,6 @@
     </tbody>
   </table>
 </div>
-<div class="alert alert-success" role="alert">
+<div class="alert alert-success" *ngIf="showMsg" role="alert">
   <strong>Well done!</strong> Your Order is Successfully Send
 </div>

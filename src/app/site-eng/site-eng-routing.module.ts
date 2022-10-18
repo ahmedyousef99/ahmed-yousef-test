@@ -19,7 +19,7 @@ const routes: Routes = [
     component: AddOrderComponent,
   },
   {
-    path: `orders-list/details`,
+    path: `orders-list/details/:id`,
     component: DetailsComponent,
   },
 ];

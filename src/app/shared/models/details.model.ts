@@ -1,6 +1,6 @@
 import { DropDownLocation } from './drop-down-location.model';
 export interface Details {
-  descrription: string;
-  loaction: DropDownLocation;
+  description: string;
+  location: DropDownLocation;
   progress: number;
 }

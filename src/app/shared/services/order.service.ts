@@ -7,47 +7,50 @@ import { Order } from '../models/orders.model';
   providedIn: 'root',
 })
 export class OrderService {
-  listOfOrders: Order[];
-
-  constructor() {
-    this.listOfOrders = [
-      {
+  showMsg: boolean = false;
+  // listOfOrders: Order[];
+  listOfOrders: Order[] = [
+    {
+      id: 1,
+      description: `this the first order`,
+      location: {
         id: Math.floor((1 + Math.random()) * 0x10000),
-        descrription: `this the first order`,
-        loaction: {
-          id: Math.floor((1 + Math.random()) * 0x10000),
-          name: `Nabuls`,
-        },
-        progress: 0,
-        creationDate: new Date(),
-        operationDescription: `First Order`,
-        startDate: new Date(),
-        endDate: new Date(),
+        name: `Nabuls`,
       },
-      {
+      progress: 0,
+      creationDate: new Date(),
+      operationDescription: `First Order`,
+      startDate: new Date(),
+      endDate: new Date(),
+    },
+    {
+      id: 2,
+      description: `this is the second order`,
+      location: {
         id: Math.floor((1 + Math.random()) * 0x10000),
-        descrription: `this is the second order`,
-        loaction: {
-          id: Math.floor((1 + Math.random()) * 0x10000),
-          name: `Gaza`,
-        },
-        progress: 0,
-        creationDate: new Date(),
-        operationDescription: `in the order make sure of the buildings`,
-        startDate: new Date(),
-        endDate: new Date(),
+        name: `Gaza`,
       },
-    ];
-  }
+      progress: 0,
+      creationDate: new Date(),
+      operationDescription: `in the order make sure of the buildings`,
+      startDate: new Date(),
+      endDate: new Date(),
+    },
+  ];
 
-  getOrders(): Observable<any> {
+  constructor() {}
+
+  /////get all orders
+  getOrders(): Observable<Order[]> {
     return of(this.listOfOrders);
   }
-  addOrder(order: any): void {
+
+  /////add a new order
+  addOrder(order: Order): void {
     let newOrder: Order = {
       id: Math.floor((1 + Math.random()) * 0x10000),
-      descrription: order.descrription3,
-      loaction: {
+      description: order.description,
+      location: {
         id: order.location.id,
         name: order.location.name,
       },
@@ -59,10 +62,13 @@ export class OrderService {
     };
     console.log(newOrder);
     this.listOfOrders.push(newOrder);
+    localStorage.setItem('orders', JSON.stringify(this.listOfOrders));
+
     this.getOrders();
-    console.log(newOrder);
-    console.log(this.listOfOrders.length);
+    this.showMsg = true;
   }
+
+  //////to get loactions from api
   getLocations(): Observable<DropDownLocation[]> {
     let locations: DropDownLocation[] = [
       {
@@ -79,5 +85,17 @@ export class OrderService {
       },
     ];
     return of(locations);
+  }
+
+  ////get order by id
+  getOrderById(id: number): Observable<Order> {
+    let orderById: Order = this.listOfOrders.find((e) => {
+      return e.id == id;
+    });
+
+    return of(orderById);
+  }
+  getDelete(i: number) {
+    this.listOfOrders.splice(i, 1);
   }
 }

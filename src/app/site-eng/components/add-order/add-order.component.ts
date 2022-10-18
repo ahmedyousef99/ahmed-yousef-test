@@ -1,9 +1,28 @@
 import { DropDownLocation } from './../../../shared/models/drop-down-location.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/shared/services/order.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
+class CustomValidator {
+  // Number only validation
+  static numeric(control: AbstractControl) {
+    let val = control.value;
+
+    if (val === null || val === '') return null;
+
+    if (!val.toString().match(/^[0-9]+(\.?[0-9]+)?$/))
+      return { invalidNumber: true };
+
+    return null;
+  }
+}
 @Component({
   selector: 'app-add-order',
   templateUrl: './add-order.component.html',
@@ -17,7 +36,8 @@ export class AddOrderComponent implements OnInit, OnDestroy {
 
   constructor(
     private builder: FormBuilder,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private router: Router
   ) {
     this.initializeFormGroup();
   }
@@ -32,7 +52,7 @@ export class AddOrderComponent implements OnInit, OnDestroy {
       startDate: [``, Validators.required],
       endDate: [``, Validators.required],
       location: [``],
-      progress: [``, Validators.required],
+      progress: [``, [Validators.required]],
       description: [``, Validators.required],
     });
   }
@@ -44,6 +64,7 @@ export class AddOrderComponent implements OnInit, OnDestroy {
     this.form.get(`location`).setValue(selectedLocation);
     console.log(this.form.value);
     this.orderService.addOrder(this.form.value);
+    this.router.navigate([`./`]);
   }
   getLocations(): void {
     var sub = this.orderService.getLocations().subscribe(

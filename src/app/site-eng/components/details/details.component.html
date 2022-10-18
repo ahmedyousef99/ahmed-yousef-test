@@ -1,1 +1,27 @@
-<p>details works!</p>
+<div class="container">
+  <div class="tablee">
+    <table border="1" [cellPadding]="4" [cellSpacing]="2" class="styled-table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+
+          <th scope="col">Description</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ currentOrder.location.name }}</td>
+          <td>{{ currentOrder.description }}</td>
+          <td>
+            <button class="btn btn-primary">Edit</button>
+            <button class="btn mx-2 btn-success">Add</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-info" (click)="onClickBackToHome()">
+      All Orders
+    </button>
+  </div>
+</div>

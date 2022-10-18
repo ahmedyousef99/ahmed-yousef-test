@@ -13,19 +13,22 @@ export class ListOrdersComponent implements OnInit, OnDestroy {
   listOfOrders: Order[] = [];
   subscription: Subscription[] = [];
   form: FormGroup;
-
+  showMsg: boolean;
   constructor(private ordersService: OrderService) {}
 
   ngOnInit(): void {
     this.getAllOrders();
+    this.showMsg = this.ordersService.showMsg;
+    setTimeout(() => {
+      this.showMsg = false;
+    }, 2000);
   }
 
   getAllOrders(): void {
     var sub = this.ordersService.getOrders().subscribe(
       (res: Order[]) => {
-        console.log(res, `from getallorders`);
-        this.listOfOrders = res;
-        console.log(this.listOfOrders);
+        localStorage.setItem('orders', JSON.stringify(res));
+        this.listOfOrders = JSON.parse(localStorage.getItem(`orders`));
       },
       (error) => {
         console.log(error, `from getallorders`);
@@ -37,5 +40,10 @@ export class ListOrdersComponent implements OnInit, OnDestroy {
     if (this.subscription.length > 0) {
       this.subscription.forEach((e) => e.unsubscribe());
     }
+  }
+  onDelete(index: number) {
+    console.log(index);
+    this.ordersService.getDelete(index);
+    this.getAllOrders();
   }
 }
