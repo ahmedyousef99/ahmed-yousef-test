@@ -1,0 +1,43 @@
+<div class="cartBox">
+  <div class="btn btn-success my-3" routerLink="/orders-list/add-order">
+    New Order
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>creation date:</th>
+        <th>Operation description:</th>
+        <th>Start date:</th>
+        <th>End date:</th>
+        <th>progress:</th>
+
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- date: "longDate" -->
+      <tr *ngFor="let item of listOfOrders; let i = index">
+        <td>{{ item.creationDate | date: "longDate" }}</td>
+        <td>{{ item.operationDescription }}</td>
+        <td>{{ item.startDate | date: "longDate" }}</td>
+        <td>{{ item.endDate | date: "longDate" }}</td>
+        <td>{{ item.progress }}</td>
+
+        <td>
+          <button class="btn btn-danger">Delete</button>
+          <button
+            routerLink="/orders-list/details"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#staticBackdrop"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="alert alert-success" role="alert">
+  <strong>Well done!</strong> Your Order is Successfully Send
+</div>

@@ -1,0 +1,87 @@
+<div class="container">
+  <!-- <div class="welcome-add" *ngIf="showAddPage">
+    Please Rigester New User Here
+  </div> -->
+  <!-- <div class="welcome-edit" *ngIf="!showAddPage">
+    Please Be Carefull When You Eddit The Users
+  </div> -->
+  <div>
+    <!-- <span class="error d-block" *ngIf="showError && !showDoneMessage"
+      >Please Enter your ID</span
+    > -->
+    <!-- <span *ngIf="showDoneMessage" class="done">Added successfully!</span>
+    <span *ngIf="showDoneMessageEdit && !showError" class="done"
+      >Changes successfully!</span
+    > -->
+  </div>
+  <form class="mb-5" [formGroup]="form">
+    <div class="col-6">
+      <div>
+        <label>Operation Description:</label>
+        <textarea
+          placeholder="Enter the description about this Operation "
+          formControlName="operationDescription"
+          class="form-control"
+          name=""
+          id=""
+        ></textarea>
+      </div>
+
+      <div class="">
+        <label for="">Enter Start Date</label>
+        <div>
+          <input type="date" class="form-control" formControlName="startDate" />
+        </div>
+      </div>
+      <div>
+        <label for="">Enter End Date</label>
+        <div class="">
+          <input type="date" class="form-control" formControlName="endDate" />
+        </div>
+      </div>
+      <div>
+        <label for=""> More Description</label>
+        <div class="">
+          <textarea
+            placeholder="Enter more description for details "
+            formControlName="description"
+            class="form-control"
+            name=""
+            id=""
+          ></textarea>
+        </div>
+        <label for=""> Progress %</label>
+        <div class="">
+          <input
+            type="number"
+            formControlName="progress"
+            class="form-control"
+            name=""
+            id=""
+          />
+        </div>
+      </div>
+      <div class="select">
+        <app-drop-down-location
+          (selctedValue)="getSelect($event)"
+          [title]="'Select Location'"
+          [data]="listOfLocations"
+        ></app-drop-down-location>
+      </div>
+
+      <!-- routerLink="back" -->
+      <!-- <div class="mt-2">
+        <button class="button-68 col-3">Save Edit</button>
+      </div> -->
+      <div class="mt-2">
+        <button
+          class="btn btn-success"
+          [disabled]="form.invalid"
+          (click)="onClickadd()"
+        >
+          Add Order
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
