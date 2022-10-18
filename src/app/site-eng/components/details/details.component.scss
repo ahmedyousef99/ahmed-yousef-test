@@ -29,11 +29,16 @@
   margin: 15px 0;
   font-size: 0.9em;
   font-family: sans-serif;
-  min-width: 400px;
+  min-width: 500px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
-
-table {
-  max-width: 1000px;
-  min-width: 1000x;
+.btns-holder {
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.prog {
+  text-align: center;
 }

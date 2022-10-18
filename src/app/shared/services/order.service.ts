@@ -36,6 +36,32 @@ export class OrderService {
       startDate: new Date(),
       endDate: new Date(),
     },
+    {
+      id: 3,
+      description: `this is the Third order`,
+      location: {
+        id: Math.floor((1 + Math.random()) * 0x10000),
+        name: `Gaza`,
+      },
+      progress: 0,
+      creationDate: new Date(),
+      operationDescription: `in the order make sure of the buildings`,
+      startDate: new Date(),
+      endDate: new Date(),
+    },
+    {
+      id: 4,
+      description: `this is the fourth order`,
+      location: {
+        id: Math.floor((1 + Math.random()) * 0x10000),
+        name: `Gaza`,
+      },
+      progress: 0,
+      creationDate: new Date(),
+      operationDescription: `in the order make sure of the buildings`,
+      startDate: new Date(),
+      endDate: new Date(),
+    },
   ];
 
   constructor() {}

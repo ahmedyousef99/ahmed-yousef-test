@@ -21,10 +21,12 @@
         <td>{{ item.operationDescription }}</td>
         <td>{{ item.startDate | date: "longDate" }}</td>
         <td>{{ item.endDate | date: "longDate" }}</td>
-        <td>{{ item.progress }}</td>
+        <td>{{ item.progress }}%</td>
 
         <td>
-          <button class="btn btn-danger" (click)="onDelete(i)">Delete</button>
+          <button class="btn btn-danger mx-1" (click)="onDelete(i)">
+            Delete
+          </button>
           <button
             routerLink="/orders-list/details/{{ item.id }}"
             class="btn btn-primary"
