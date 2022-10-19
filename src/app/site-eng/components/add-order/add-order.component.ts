@@ -64,7 +64,7 @@ export class AddOrderComponent implements OnInit, OnDestroy {
     this.form.get(`location`).setValue(selectedLocation);
     console.log(this.form.value);
     this.orderService.addOrder(this.form.value);
-    this.router.navigate([`./`]);
+    this.router.navigate([`/orders/orders-list`]);
   }
   getLocations(): void {
     var sub = this.orderService.getLocations().subscribe(

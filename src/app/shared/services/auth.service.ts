@@ -1,28 +1,38 @@
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
+export interface Login {
+  username: string;
+  password: string;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  adminPermissions: string[] = [`admin`, 'admin.product'];
-  usersPermissions: string[] = [`user`, `user.products`, `user.cart`];
-  role: string = `user`;
+  usersPermissions: string[] = [];
+  role: string = ``;
 
-  constructor() {}
+  constructor(private toastr: ToastrService) {}
 
-  login(email: string, password: string): Observable<any> {
-    let data = {
+  login(data: Login): Observable<any> {
+    if (data.username == `siteengineer`) {
+      this.role = `siteengineer`;
+      this.usersPermissions = [`siteengineer`];
+    } else if (data.username == `foremen`) {
+      this.role = `foremen`;
+      this.usersPermissions = [`foremen`, `foremen.details`];
+    } else {
+      this.toastr.error(`${data.username} is Not registered`);
+    }
+    let dataOfUser = {
       id: 1,
-      name: {
-        firstName: `ahmed`,
-        lastName: `Yousef`,
-      },
-      email: email,
+      name: data.username,
+      email: `aaa@hotmail.com`,
       role: this.role,
       permissions: this.usersPermissions,
       token: `Assffe434sfd`,
     };
-    return of(data);
+    return of(dataOfUser);
   }
 }

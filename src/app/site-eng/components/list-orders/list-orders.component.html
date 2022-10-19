@@ -1,5 +1,5 @@
 <div class="cartBox">
-  <div class="btn btn-success my-3" routerLink="/orders-list/add-order">
+  <div class="btn btn-success my-3" routerLink="/orders/orders-list/add-order">
     New Order
   </div>
   <table class="table table-striped">
@@ -28,7 +28,7 @@
             Delete
           </button>
           <button
-            routerLink="/orders-list/details/{{ item.id }}"
+            routerLink="/orders/orders-list/details/{{ item.id }}"
             class="btn btn-primary"
             data-toggle="modal"
             data-target="#staticBackdrop"

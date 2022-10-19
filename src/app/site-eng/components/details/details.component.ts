@@ -47,6 +47,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
     }
   }
   onClickBackToHome(): void {
-    this.router.navigate([`/orders-list`]);
+    this.router.navigate([`orders/orders-list`]);
   }
 }
