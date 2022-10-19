@@ -1,3 +1,4 @@
+import { Header } from './../../../shared/models/header.model';
 import { Order } from './../../../shared/models/orders.model';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -37,7 +38,7 @@ export class ListOrdersComponent implements OnInit, OnDestroy {
 
   getAllOrders(): void {
     var sub = this.ordersService.getOrders().subscribe(
-      (res: Order[]) => {
+      (res: Header[]) => {
         localStorage.setItem('orders', JSON.stringify(res));
         this.listOfOrders = JSON.parse(localStorage.getItem(`orders`));
       },

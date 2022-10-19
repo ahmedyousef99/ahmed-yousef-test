@@ -1,3 +1,4 @@
+import { Header } from './../models/header.model';
 import { DropDownLocation } from './../models/drop-down-location.model';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -9,14 +10,10 @@ import { Order } from '../models/orders.model';
 export class OrderService {
   showMsg: boolean = false;
   // listOfOrders: Order[];
-  listOfOrders: Order[] = [
+  listOfOrders: Header[] = [
     {
       id: 1,
-      description: `this the first order`,
-      location: {
-        id: Math.floor((1 + Math.random()) * 0x10000),
-        name: `Nabuls`,
-      },
+
       progress: 0,
       creationDate: new Date(),
       operationDescription: `First Order`,
@@ -25,11 +22,7 @@ export class OrderService {
     },
     {
       id: 2,
-      description: `this is the second order`,
-      location: {
-        id: Math.floor((1 + Math.random()) * 0x10000),
-        name: `Gaza`,
-      },
+
       progress: 0,
       creationDate: new Date(),
       operationDescription: `in the order make sure of the buildings`,
@@ -38,11 +31,7 @@ export class OrderService {
     },
     {
       id: 3,
-      description: `this is the Third order`,
-      location: {
-        id: Math.floor((1 + Math.random()) * 0x10000),
-        name: `Gaza`,
-      },
+
       progress: 0,
       creationDate: new Date(),
       operationDescription: `in the order make sure of the buildings`,
@@ -51,11 +40,7 @@ export class OrderService {
     },
     {
       id: 4,
-      description: `this is the fourth order`,
-      location: {
-        id: Math.floor((1 + Math.random()) * 0x10000),
-        name: `Gaza`,
-      },
+
       progress: 0,
       creationDate: new Date(),
       operationDescription: `in the order make sure of the buildings`,
@@ -67,19 +52,15 @@ export class OrderService {
   constructor() {}
 
   /////get all orders
-  getOrders(): Observable<Order[]> {
+  getOrders(): Observable<Header[]> {
     return of(this.listOfOrders);
   }
 
   /////add a new order
-  addOrder(order: Order): void {
-    let newOrder: Order = {
+  addOrder(order: Header): void {
+    let newOrder: Header = {
       id: Math.floor((1 + Math.random()) * 0x10000),
-      description: order.description,
-      location: {
-        id: order.location.id,
-        name: order.location.name,
-      },
+
       progress: order.progress,
       creationDate: new Date(),
       operationDescription: order.operationDescription,
@@ -114,8 +95,8 @@ export class OrderService {
   }
 
   ////get order by id
-  getOrderById(id: number): Observable<Order> {
-    let orderById: Order = this.listOfOrders.find((e) => {
+  getOrderById(id: number): Observable<Header> {
+    let orderById: Header = this.listOfOrders.find((e) => {
       return e.id == id;
     });
 

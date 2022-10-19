@@ -1,4 +1,4 @@
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -15,6 +15,7 @@ import { DetailsComponent } from './components/details/details.component';
     SiteEngRoutingModule,
     SharedModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
 })
 export class SiteEngModule {}

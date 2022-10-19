@@ -1,33 +1,121 @@
-<div class="mt-5">
-  <div class="tablee text-align-center">
-    <table border="1" [cellPadding]="4" [cellSpacing]="2" class="styled-table">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
+<div class="containerr">
+  <div class="mt-5">
+    <div class="prog">
+      <h3>{{ currentOrder.operationDescription }}</h3>
+      <div>
+        <h3>{{ currentOrder.progress }}%</h3>
+        <div *ngIf="showInputProgress">
+          <input
+            class="form-control mb-2 input-progress"
+            type="number"
+            [(ngModel)]="currentOrder.progress"
+          />
+          <button class="btn btn-success" (click)="showInputProgress = false">
+            Save
+          </button>
+        </div>
+      </div>
 
-          <th scope="col">Description</th>
-          <th class="prog" scope="col">Progress</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{ currentOrder.location.name }}</td>
-          <td>{{ currentOrder.description }}</td>
-          <td class="prog">{{ currentOrder.progress | percent }}</td>
-          <td class="btns-holder">
-            <button [disabled]="!canAdd" class="btn mx-4 btn-primary">
-              Edit
+      <button
+        [disabled]="canAdd"
+        class="btn btn-info"
+        (click)="showInputProgress = true"
+      >
+        Update Progress
+      </button>
+    </div>
+    <div class="tablee text-align-center">
+      <button
+        (click)="onClickAdd()"
+        [disabled]="!canAdd"
+        class="btn btn-success"
+      >
+        Add
+      </button>
+      <table
+        border="1"
+        [cellPadding]="4"
+        [cellSpacing]="2"
+        class="styled-table"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Work Item</th>
+            <th scope="col">Location</th>
+
+            <th scope="col">Description</th>
+
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of detailsOrders; let i = index">
+            <td>aa</td>
+            <td>{{ item.location.name }}</td>
+            <td>{{ item.description }}</td>
+
+            <td class="">
+              <button
+                [disabled]="!canAdd"
+                class="btn btn-danger"
+                (click)="deleteItem(i)"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-info" (click)="onClickBackToHome()">
+        All Orders
+      </button>
+    </div>
+  </div>
+
+  <div class="formss" *ngIf="showAddBtn">
+    <div class="mt-5 col-8 mx-auto">
+      <form class="mb-5" [formGroup]="form">
+        <div>
+          <div>
+            <label>Work Item*</label>
+            <input
+              type="text"
+              placeholder="Work Item "
+              formControlName="workItem"
+              class="form-control"
+              name=""
+              id=""
+            />
+          </div>
+
+          <div class="select">
+            <app-drop-down-location
+              (selctedValue)="getSelect($event)"
+              [title]="'Select Location'"
+              [data]="listOfLocations"
+            ></app-drop-down-location>
+          </div>
+
+          <div>
+            <label for=""> Description</label>
+            <div class="">
+              <textarea
+                placeholder="Enter more description for details "
+                formControlName="description"
+                class="form-control"
+                name=""
+                id=""
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="mt-2">
+            <button class="btn btn-success" (click)="onClickadd()">
+              Add Order
             </button>
-            <button [disabled]="!canAdd" class="btn btnn btn-success">
-              Add
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <button class="btn btn-info" (click)="onClickBackToHome()">
-      All Orders
-    </button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
