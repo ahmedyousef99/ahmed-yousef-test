@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { OrderService } from 'src/app/shared/services/order.service';
+import { AccountService } from 'src/app/shared/services/account.service';
 
 @Component({
   selector: 'app-details',
@@ -13,14 +14,21 @@ export class DetailsComponent implements OnInit, OnDestroy {
   idOfOrder: number;
   subscription: Subscription;
   currentOrder: Order;
+  canAdd: boolean;
 
   constructor(
     private orderService: OrderService,
+    private account: AccountService,
     private activeRout: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    if (this.account.isSiteengineerRole()) {
+      this.canAdd = true;
+    } else {
+      this.canAdd = false;
+    }
     if (this.activeRout.snapshot.paramMap.has(`id`)) {
       this.idOfOrder = +this.activeRout.snapshot.paramMap.get(`id`);
     }

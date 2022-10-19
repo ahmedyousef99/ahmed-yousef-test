@@ -16,8 +16,12 @@
           <td>{{ currentOrder.description }}</td>
           <td class="prog">{{ currentOrder.progress | percent }}</td>
           <td class="btns-holder">
-            <button class="btn mx-4 btn-primary">Edit</button>
-            <button class="btn btnn btn-success">Add</button>
+            <button [disabled]="!canAdd" class="btn mx-4 btn-primary">
+              Edit
+            </button>
+            <button [disabled]="!canAdd" class="btn btnn btn-success">
+              Add
+            </button>
           </td>
         </tr>
       </tbody>

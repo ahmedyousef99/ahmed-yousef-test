@@ -38,10 +38,10 @@ export class LoginComponent implements OnInit {
         this.router.navigate([`orders`]);
         this.toastr.success(`${this.account.getUsername()} is logged in`);
       } else if (this.account.isForemen()) {
-        this.toastr.success(`${this.account.getUsername()} is logged in`);
-
         this.router.navigate([`orders`]);
+        this.toastr.success(`${this.account.getUsername()} is logged in`);
       }
+
       console.log(res);
     });
   }

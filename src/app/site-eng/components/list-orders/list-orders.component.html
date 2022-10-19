@@ -1,7 +1,11 @@
 <div class="cartBox">
-  <div class="btn btn-success my-3" routerLink="/orders/orders-list/add-order">
+  <button
+    [disabled]="!canAdd"
+    class="btn btn-success my-3"
+    routerLink="/orders/orders-list/add-order"
+  >
     New Order
-  </div>
+  </button>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -24,7 +28,11 @@
         <td>{{ item.progress }}%</td>
 
         <td>
-          <button class="btn btn-danger mx-1" (click)="onDelete(i)">
+          <button
+            [disabled]="!canAdd"
+            class="btn btn-danger mx-1"
+            (click)="onDelete(i)"
+          >
             Delete
           </button>
           <button

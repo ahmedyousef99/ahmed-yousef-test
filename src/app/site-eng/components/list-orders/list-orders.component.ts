@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { OrderService } from 'src/app/shared/services/order.service';
+import { AccountService } from 'src/app/shared/services/account.service';
 
 @Component({
   selector: 'app-list-orders',
@@ -14,7 +15,12 @@ export class ListOrdersComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   form: FormGroup;
   showMsg: boolean;
-  constructor(private ordersService: OrderService) {}
+  canAdd: boolean = false;
+
+  constructor(
+    private ordersService: OrderService,
+    private account: AccountService
+  ) {}
 
   ngOnInit(): void {
     this.getAllOrders();
@@ -22,6 +28,11 @@ export class ListOrdersComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.showMsg = false;
     }, 2000);
+    if (this.account.isSiteengineerRole()) {
+      this.canAdd = true;
+    } else {
+      this.canAdd = false;
+    }
   }
 
   getAllOrders(): void {

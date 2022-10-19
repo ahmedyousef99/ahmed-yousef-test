@@ -21,7 +21,7 @@ export class AuthService {
       this.usersPermissions = [`siteengineer`];
     } else if (data.username == `foremen`) {
       this.role = `foremen`;
-      this.usersPermissions = [`foremen`, `foremen.details`];
+      this.usersPermissions = [`siteengineer`];
     } else {
       this.toastr.error(`${data.username} is Not registered`);
     }

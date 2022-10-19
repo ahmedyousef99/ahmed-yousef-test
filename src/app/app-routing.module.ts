@@ -12,8 +12,8 @@ const routes: Routes = [
     path: `orders`,
     loadChildren: () =>
       import(`./site-eng/site-eng.module`).then((m) => m.SiteEngModule),
-    // canActivate: [MainGuard],
-    // data: { permission: `user.products` , role: `` },
+    canActivate: [MainGuard],
+    data: { permission: `siteengineer`, role: [`siteengineer`, `foremen`] },
   },
 ];
 

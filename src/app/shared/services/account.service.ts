@@ -7,7 +7,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AccountService {
   userKey: string;
-  tokenKey: string;
   constructor(private router: Router, private toastr: ToastrService) {
     this.userKey = `user-data`;
   }
@@ -34,7 +33,7 @@ export class AccountService {
   }
 
   getUsername(): string {
-    return this.getUser && `${this.getUser.username}`;
+    return this.getUser && `${this.getUser.name}`;
   }
   getPermissions(): string[] {
     return this.getUser && this.getUser.permissions;
@@ -46,7 +45,6 @@ export class AccountService {
     this.toastr.error(`${this.getUsername()} is Logged out `, `Logged out`);
 
     localStorage.removeItem(this.userKey);
-    localStorage.removeItem(this.tokenKey);
-    this.router.navigate([`public/login`]);
+    this.router.navigate([`/login`]);
   }
 }
