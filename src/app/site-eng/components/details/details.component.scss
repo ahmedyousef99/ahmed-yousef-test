@@ -39,14 +39,11 @@
   align-items: center;
   justify-content: space-between;
 }
-.prog {
-  text-align: center;
+.add-btn {
+  margin-left: 375px;
 }
 .input-progress {
   width: 80px !important;
-}
-textarea:focus {
-  background-color: black;
 }
 
 label {
@@ -56,148 +53,16 @@ input,
 textarea {
   font-weight: bold;
   background-color: black;
-  color: rgb(187, 3, 3);
+  color: white;
 }
 
 input:focus,
-textarea {
+textarea:focus {
   font-weight: bold;
   background-color: #022720;
   color: rgb(70, 68, 240);
 }
-input::placeholder {
+input::placeholder,
+textarea::placeholder {
   font-weight: normal;
-}
-.error {
-  display: block;
-  color: red;
-  padding: 10px 30px;
-  font-size: 25px;
-  font-weight: bold;
-  border: 2px sold red;
-}
-.welcome-add {
-  padding: 10px 50px;
-  font-size: 25px;
-  font-weight: bolder;
-  color: #046955;
-  border: 3px solid #046955;
-  width: fit-content;
-  margin-left: 300px;
-}
-.welcome-edit {
-  padding: 10px 50px;
-  font-size: 25px;
-  font-weight: bolder;
-  color: #27ae60;
-  border: 3px solid #27ae60;
-  width: fit-content;
-  margin-left: 300px;
-}
-.button-68 {
-  appearance: none;
-  backface-visibility: hidden;
-  background-color: #27ae60;
-  border-radius: 8px;
-  border-style: none;
-  box-shadow: rgba(39, 174, 96, 0.15) 0 4px 9px;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-family: Inter, -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
-    sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: normal;
-  line-height: 1.5;
-  outline: none;
-  overflow: hidden;
-  padding: 8px 10px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  transform: translate3d(0, 0, 0);
-  transition: all 0.3s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: top;
-  white-space: nowrap;
-}
-
-.button-68:hover {
-  background-color: #1e8449;
-  opacity: 1;
-  transform: translateY(0);
-  transition-duration: 0.35s;
-}
-
-.button-68:active {
-  transform: translateY(2px);
-  transition-duration: 0.35s;
-}
-
-.button-68:hover {
-  box-shadow: rgba(39, 174, 96, 0.2) 0 6px 12px;
-}
-.donee {
-  background-color: green !important;
-}
-.done {
-  color: green;
-  padding: 10px 30px;
-  font-size: 25px;
-  font-weight: bold;
-  border: 2px sold green;
-}
-
-.button-69 {
-  appearance: none;
-  backface-visibility: hidden;
-  background-color: #e62143;
-  border-radius: 8px;
-  border-style: none;
-  box-shadow: rgba(39, 174, 96, 0.15) 0 4px 9px;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-family: Inter, -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
-    sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: normal;
-  line-height: 1.5;
-  outline: none;
-  overflow: hidden;
-  padding: 8px 10px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  transform: translate3d(0, 0, 0);
-  transition: all 0.3s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: top;
-  white-space: nowrap;
-
-  margin-left: 5px;
-}
-
-.button-69:hover {
-  background-color: #ca0223;
-  opacity: 1;
-  transform: translateY(0);
-  transition-duration: 0.35s;
-}
-
-.button-69:active {
-  transform: translateY(2px);
-  transition-duration: 0.35s;
-}
-
-.button-69:hover {
-  box-shadow: rgba(39, 174, 96, 0.2) 0 6px 12px;
 }

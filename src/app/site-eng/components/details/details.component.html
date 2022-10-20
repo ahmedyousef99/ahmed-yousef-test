@@ -1,36 +1,47 @@
-<div class="containerr">
+<div class="screen-holder">
   <div class="mt-5">
     <div class="prog">
-      <h3>{{ currentOrder.operationDescription }}</h3>
-      <div>
-        <h3>{{ currentOrder.progress }}%</h3>
-        <div *ngIf="showInputProgress">
-          <input
-            class="form-control mb-2 input-progress"
-            type="number"
-            [(ngModel)]="currentOrder.progress"
-          />
-          <button class="btn btn-success" (click)="showInputProgress = false">
-            Save
+      <h3>{{ currentOrder.operationDescription }} :</h3>
+      <div class="">
+        <h3 class="text-danger">
+          <span class="text-light">Progress :</span>
+          {{ currentOrder.progress }}%
+        </h3>
+        <div class="d-flex">
+          <div
+            class="d-flex justify-content-start align-items-center"
+            *ngIf="showInputProgress"
+          >
+            <input
+              class="form-control input-progress"
+              type="number"
+              [(ngModel)]="currentOrder.progress"
+            />
+            <button
+              class="btn mx-2 btn-success"
+              (click)="showInputProgress = false"
+            >
+              Save
+            </button>
+          </div>
+
+          <button
+            class="btn btn-info"
+            [disabled]="canAdd"
+            (click)="showInputProgress = true"
+          >
+            Update Progress
           </button>
         </div>
       </div>
-
-      <button
-        [disabled]="canAdd"
-        class="btn btn-info"
-        (click)="showInputProgress = true"
-      >
-        Update Progress
-      </button>
     </div>
     <div class="tablee text-align-center">
       <button
         (click)="onClickAdd()"
         [disabled]="!canAdd"
-        class="btn btn-success"
+        class="add-btn btn mt-2 btn-success"
       >
-        Add
+        Add New Item
       </button>
       <table
         border="1"
