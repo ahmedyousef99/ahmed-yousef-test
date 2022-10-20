@@ -8,6 +8,7 @@ import { AccountService } from 'src/app/shared/services/account.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropDownLocation } from 'src/app/shared/models/drop-down-location.model';
 import { DetailsServiceService } from 'src/app/shared/services/details-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-details',
@@ -32,7 +33,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
     private orderService: OrderService,
     private account: AccountService,
     private activeRout: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.initializeFormGroup();
   }
@@ -108,10 +110,24 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.detailsOrders = this.detailsService.getOrdersFromLocal(this.idOfOrder);
     this.detailsOrders.push(this.form.value);
     this.detailsService.setOrdersInLocal(this.detailsOrders, this.idOfOrder);
+    this.toastr.info(
+      `Work Items with name:${this.form.value.workItem} was added successfully`,
+      `Added items on details`
+    );
+    this.form.reset();
+    // this.form.value({
+    //   location: ``,
+    //   description: ``,
+    //   workItem: ``,
+    // });
   }
   /////delete work item
   deleteItem(i: number) {
     this.detailsOrders = this.detailsService.getOrdersFromLocal(this.idOfOrder);
+    this.toastr.show(
+      `${this.detailsOrders[i].workItem} was deleted successfully`,
+      `Delete items`
+    );
     this.detailsOrders.splice(i, 1);
     this.detailsService.setOrdersInLocal(this.detailsOrders, this.idOfOrder);
   }

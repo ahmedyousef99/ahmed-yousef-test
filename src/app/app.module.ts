@@ -18,7 +18,7 @@ import { SharedModule } from './shared/shared.module';
     FormsModule,
     LayoutModule,
     ToastrModule.forRoot({
-      timeOut: 1000,
+      timeOut: 2000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
       progressBar: true,

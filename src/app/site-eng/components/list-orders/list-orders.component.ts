@@ -5,6 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { OrderService } from 'src/app/shared/services/order.service';
 import { AccountService } from 'src/app/shared/services/account.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-orders',
@@ -19,6 +20,7 @@ export class ListOrdersComponent implements OnInit, OnDestroy {
   canAdd: boolean = false;
 
   constructor(
+    private toastr: ToastrService,
     private ordersService: OrderService,
     private account: AccountService
   ) {}
@@ -62,5 +64,9 @@ export class ListOrdersComponent implements OnInit, OnDestroy {
   onDelete(index: number) {
     this.ordersService.getDelete(index);
     this.getAllOrders();
+    this.toastr.show(
+      `${this.listOfOrders[index].operationDescription} was deleted successfully`,
+      `Delete items`
+    );
   }
 }
