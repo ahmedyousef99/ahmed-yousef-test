@@ -1,10 +1,17 @@
 <div class="mt-5 col-8 mx-auto">
+  <h2 *ngIf="!showEditMsg" class="text-info">
+    Please fill all fields when you add new order
+  </h2>
+  <h2 *ngIf="showEditMsg && currentOrder" class="text-info">
+    Edit Order :-
+    <span class="text-primary">{{ currentOrder.operationDescription }}</span>
+  </h2>
   <form class="mb-5" [formGroup]="form">
     <div>
       <div>
         <label>Operation Description:</label>
         <textarea
-          placeholder="Enter the description about this Operation "
+          placeholder="Enter description for operation "
           formControlName="operationDescription"
           class="form-control"
           name=""
@@ -28,11 +35,20 @@
 
       <div class="mt-2">
         <button
+          *ngIf="!showEditMsg"
           class="btn btn-success"
           [disabled]="form.invalid"
           (click)="onClickadd()"
         >
           Add Order
+        </button>
+        <button
+          *ngIf="showEditMsg"
+          class="btn btn-success"
+          [disabled]="form.invalid"
+          (click)="onClickSaveEidt()"
+        >
+          Save Changing
         </button>
       </div>
     </div>

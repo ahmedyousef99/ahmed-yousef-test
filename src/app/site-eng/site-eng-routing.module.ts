@@ -19,6 +19,10 @@ const routes: Routes = [
     component: AddOrderComponent,
   },
   {
+    path: `orders-list/add-order/:id`,
+    component: AddOrderComponent,
+  },
+  {
     path: `orders-list/details/:id`,
     component: DetailsComponent,
   },

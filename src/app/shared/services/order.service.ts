@@ -109,6 +109,23 @@ export class OrderService {
     this.setOrdersInLocal(this.listOfOrders);
   }
 
+  EditOrder(id: number, newOrder: Header): void {
+    if (id) {
+      this.listOfOrders = this.getOrdersFromLocal();
+      const userIndex = this.listOfOrders.findIndex((order) => order.id === id);
+
+      this.listOfOrders[userIndex] = {
+        id: id,
+        progress: newOrder.progress,
+        creationDate: new Date(),
+        operationDescription: newOrder.operationDescription,
+        startDate: newOrder.startDate,
+        endDate: newOrder.endDate,
+      };
+      this.setOrdersInLocal(this.listOfOrders);
+    }
+  }
+
   ///////////set and get orders from local storage
   setOrdersInLocal(data: Header[]): void {
     localStorage.setItem(`orders`, JSON.stringify(data));

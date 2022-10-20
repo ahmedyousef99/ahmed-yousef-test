@@ -115,11 +115,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
       `Added items on details`
     );
     this.form.reset();
-    // this.form.value({
-    //   location: ``,
-    //   description: ``,
-    //   workItem: ``,
-    // });
   }
   /////delete work item
   deleteItem(i: number) {

@@ -27,7 +27,14 @@
         <td>{{ item.endDate | date: "longDate" }}</td>
         <td class="text-info">{{ item.progress }}%</td>
 
-        <td>
+        <td class="d-flex align-items-start">
+          <button
+            [disabled]="!canAdd"
+            class="btn btn-info"
+            routerLink="/orders/orders-list/add-order/{{ item.id }}"
+          >
+            Edit
+          </button>
           <button
             [disabled]="!canAdd"
             class="btn btn-danger mx-1"
