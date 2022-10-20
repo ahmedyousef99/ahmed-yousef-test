@@ -29,7 +29,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   currentOrder: Header;
   canAdd: boolean;
   showInputProgress: boolean = false;
-  detailsOrders: Details[] = [];
+  detailsOrders: Details[] = [] as Details[];
 
   constructor(
     private detailsService: DetailsServiceService,
@@ -50,6 +50,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit(): void {
+    // this.detailsService.setOrdersInLocal(this.detailsOrders, this.idOfOrder);
+    // this.detailsOrders =
     /////////////authorization on buttons
     if (this.account.isSiteengineerRole()) {
       this.canAdd = true;
@@ -66,13 +68,25 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.idOfOrder = params[`id`];
       this.orderService.getOrderById(this.idOfOrder).subscribe((res) => {
         this.currentOrder = res;
-        console.log(this.currentOrder);
       });
-      console.log(this.currentOrder);
-      console.log(this.idOfOrder);
     });
     this.subscription.push(sub);
     this.getLocations();
+    console.log(this.detailsService.getOrdersFromLocal(this.idOfOrder));
+    console.log(this.detailsOrders);
+
+    ////////for the first time add workitems the localstorage will be null so will check before////
+    if (`details${this.idOfOrder}` in localStorage) {
+      this.detailsOrders = this.detailsService.getOrdersFromLocal(
+        this.idOfOrder
+      );
+    } else {
+      this.detailsService.setOrdersInLocal(this.detailsOrders, this.idOfOrder);
+      this.detailsOrders = this.detailsService.getOrdersFromLocal(
+        this.idOfOrder
+      );
+    }
+    ////////for the first time add workitems the localstorage will be null so will check before////
   }
   getOrder(id: number) {
     this.orderService.getOrderById(id).subscribe((res) => {
@@ -83,7 +97,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
   getLocations(): void {
     var sub = this.orderService.getLocations().subscribe(
       (res) => {
-        console.log(res);
         this.listOfLocations = res;
       },
       (error) => {
@@ -106,16 +119,22 @@ export class DetailsComponent implements OnInit, OnDestroy {
       (e) => e.id == this.locationId
     );
     this.form.get(`location`).setValue(selectedLocation);
-    console.log(this.form.value);
-    this.detailsService.getOrdersFromLocal(this.idOfOrder);
+
+    this.detailsOrders = this.detailsService.getOrdersFromLocal(this.idOfOrder);
     this.detailsOrders.push(this.form.value);
     this.detailsService.setOrdersInLocal(this.detailsOrders, this.idOfOrder);
+    console.log(
+      this.detailsService.getOrdersFromLocal(this.idOfOrder),
+      `local`
+    );
+    console.log(this.detailsOrders, `arr`);
   }
   /////delete work item
   deleteItem(i: number) {
-    this.detailsService.getOrdersFromLocal(this.idOfOrder);
+    this.detailsOrders = this.detailsService.getOrdersFromLocal(this.idOfOrder);
     this.detailsOrders.splice(i, 1);
     this.detailsService.setOrdersInLocal(this.detailsOrders, this.idOfOrder);
+    console.log(this.detailsOrders);
   }
   ////////to add new work item and open the form
   onClickAdd() {
@@ -126,9 +145,5 @@ export class DetailsComponent implements OnInit, OnDestroy {
     if (this.subscription.length > 0) {
       this.subscription.forEach((e) => e.unsubscribe());
     }
-  }
-  displayData(): void {
-    this.detailsService.setOrdersInLocal(this.detailsOrders, this.idOfOrder);
-    this.detailsOrders = this.detailsService.getOrdersFromLocal(this.idOfOrder);
   }
 }
