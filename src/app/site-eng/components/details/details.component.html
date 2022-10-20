@@ -61,7 +61,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of detailsOrders; let i = index">
-            <td>aa</td>
+            <td>{{ item.workItem }}</td>
             <td>{{ item.location.name }}</td>
             <td>{{ item.description }}</td>
 
@@ -121,7 +121,11 @@
           </div>
 
           <div class="mt-2">
-            <button class="btn btn-success" (click)="onClickadd()">
+            <button
+              [disabled]="form.invalid"
+              class="btn btn-success"
+              (click)="onClickaddOrder()"
+            >
               Add Order
             </button>
           </div>

@@ -9,6 +9,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/shared/services/order.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 class CustomValidator {
   // Number only validation
@@ -35,6 +36,7 @@ export class AddOrderComponent implements OnInit, OnDestroy {
   locationId: number;
 
   constructor(
+    private toastr: ToastrService,
     private builder: FormBuilder,
     private orderService: OrderService,
     private router: Router
@@ -56,10 +58,10 @@ export class AddOrderComponent implements OnInit, OnDestroy {
 
   onClickadd(): void {
     this.form.get(`progress`).setValue(0);
-
     console.log(this.form.value);
     this.orderService.addOrder(this.form.value);
     this.router.navigate([`/orders/orders-list`]);
+    this.toastr.success(`The order has been added`, `Add Order`);
   }
 
   ngOnDestroy(): void {

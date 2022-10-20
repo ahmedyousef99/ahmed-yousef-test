@@ -12,7 +12,7 @@ import { AccountService } from 'src/app/shared/services/account.service';
   styleUrls: ['./list-orders.component.scss'],
 })
 export class ListOrdersComponent implements OnInit, OnDestroy {
-  listOfOrders: Order[] = [];
+  listOfOrders: Header[] = [];
   subscription: Subscription[] = [];
   form: FormGroup;
   showMsg: boolean;
@@ -25,10 +25,7 @@ export class ListOrdersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAllOrders();
-    this.showMsg = this.ordersService.showMsg;
-    setTimeout(() => {
-      this.showMsg = false;
-    }, 2000);
+
     if (this.account.isSiteengineerRole()) {
       this.canAdd = true;
     } else {
@@ -39,8 +36,7 @@ export class ListOrdersComponent implements OnInit, OnDestroy {
   getAllOrders(): void {
     var sub = this.ordersService.getOrders().subscribe(
       (res: Header[]) => {
-        localStorage.setItem('orders', JSON.stringify(res));
-        this.listOfOrders = JSON.parse(localStorage.getItem(`orders`));
+        this.listOfOrders = res;
       },
       (error) => {
         console.log(error, `from getallorders`);

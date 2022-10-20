@@ -53,7 +53,8 @@ export class OrderService {
 
   /////get all orders
   getOrders(): Observable<Header[]> {
-    return of(this.listOfOrders);
+    // this.setOrdersInLocal(this.listOfOrders);
+    return of(this.getOrdersFromLocal());
   }
 
   /////add a new order
@@ -67,12 +68,9 @@ export class OrderService {
       startDate: order.startDate,
       endDate: order.endDate,
     };
-    console.log(newOrder);
+    this.listOfOrders = this.getOrdersFromLocal();
     this.listOfOrders.push(newOrder);
-    localStorage.setItem('orders', JSON.stringify(this.listOfOrders));
-
-    this.getOrders();
-    this.showMsg = true;
+    this.setOrdersInLocal(this.listOfOrders);
   }
 
   //////to get loactions from api
@@ -103,6 +101,17 @@ export class OrderService {
     return of(orderById);
   }
   getDelete(i: number) {
+    this.listOfOrders = this.getOrdersFromLocal();
+    console.log(this.listOfOrders);
     this.listOfOrders.splice(i, 1);
+
+    this.setOrdersInLocal(this.listOfOrders);
+  }
+
+  setOrdersInLocal(data: Header[]): void {
+    localStorage.setItem(`orders`, JSON.stringify(data));
+  }
+  getOrdersFromLocal(): Header[] {
+    return JSON.parse(localStorage.getItem(`orders`));
   }
 }
