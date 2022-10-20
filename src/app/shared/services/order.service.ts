@@ -13,7 +13,6 @@ export class OrderService {
   listOfOrders: Header[] = [
     {
       id: 1,
-
       progress: 0,
       creationDate: new Date(),
       operationDescription: `First Order`,
@@ -54,13 +53,14 @@ export class OrderService {
   /////get all orders
   getOrders(): Observable<Header[]> {
     // this.setOrdersInLocal(this.listOfOrders);
-    return of(this.getOrdersFromLocal());
+
+    return of(this.listOfOrders);
   }
 
   /////add a new order
   addOrder(order: Header): void {
     let newOrder: Header = {
-      id: Math.floor((1 + Math.random()) * 0x10000),
+      id: Math.floor((1 + Math.random()) * 0x100),
 
       progress: order.progress,
       creationDate: new Date(),
@@ -94,20 +94,22 @@ export class OrderService {
 
   ////get order by id
   getOrderById(id: number): Observable<Header> {
+    this.listOfOrders = this.getOrdersFromLocal();
     let orderById: Header = this.listOfOrders.find((e) => {
       return e.id == id;
     });
 
     return of(orderById);
   }
+  //////// to delete an order from header
   getDelete(i: number) {
     this.listOfOrders = this.getOrdersFromLocal();
-    console.log(this.listOfOrders);
     this.listOfOrders.splice(i, 1);
 
     this.setOrdersInLocal(this.listOfOrders);
   }
 
+  ///////////set and get orders from local storage
   setOrdersInLocal(data: Header[]): void {
     localStorage.setItem(`orders`, JSON.stringify(data));
   }

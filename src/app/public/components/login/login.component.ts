@@ -41,8 +41,6 @@ export class LoginComponent implements OnInit {
         this.router.navigate([`orders`]);
         this.toastr.success(`${this.account.getUsername()} is logged in`);
       }
-
-      console.log(res);
     });
   }
 }

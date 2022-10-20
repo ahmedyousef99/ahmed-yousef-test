@@ -2,15 +2,10 @@ import { Header } from './../../../shared/models/header.model';
 import { Details } from './../../../shared/models/details.model';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from 'src/app/shared/services/order.service';
 import { AccountService } from 'src/app/shared/services/account.service';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropDownLocation } from 'src/app/shared/models/drop-down-location.model';
 import { DetailsServiceService } from 'src/app/shared/services/details-service.service';
 
@@ -42,16 +37,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.initializeFormGroup();
   }
 
-  initializeFormGroup(): void {
-    this.form = this.builder.group({
-      location: [``],
-      description: [``, Validators.required],
-      workItem: [``, Validators.required],
-    });
-  }
   ngOnInit(): void {
-    // this.detailsService.setOrdersInLocal(this.detailsOrders, this.idOfOrder);
-    // this.detailsOrders =
     /////////////authorization on buttons
     if (this.account.isSiteengineerRole()) {
       this.canAdd = true;
@@ -63,17 +49,16 @@ export class DetailsComponent implements OnInit, OnDestroy {
     if (this.activeRout.snapshot.paramMap.has(`id`)) {
       this.idOfOrder = +this.activeRout.snapshot.paramMap.get(`id`);
     }
-
-    var sub = this.activeRout.params.subscribe((params: Params) => {
-      this.idOfOrder = params[`id`];
-      this.orderService.getOrderById(this.idOfOrder).subscribe((res) => {
-        this.currentOrder = res;
+    /////////to get the current order by id
+    var sub = this.orderService
+      .getOrderById(this.idOfOrder)
+      .subscribe((res) => {
+        localStorage.setItem(`current-order`, JSON.stringify(res));
+        this.currentOrder = JSON.parse(localStorage.getItem(`current-order`));
       });
-    });
+
     this.subscription.push(sub);
     this.getLocations();
-    console.log(this.detailsService.getOrdersFromLocal(this.idOfOrder));
-    console.log(this.detailsOrders);
 
     ////////for the first time add workitems the localstorage will be null so will check before////
     if (`details${this.idOfOrder}` in localStorage) {
@@ -123,18 +108,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.detailsOrders = this.detailsService.getOrdersFromLocal(this.idOfOrder);
     this.detailsOrders.push(this.form.value);
     this.detailsService.setOrdersInLocal(this.detailsOrders, this.idOfOrder);
-    console.log(
-      this.detailsService.getOrdersFromLocal(this.idOfOrder),
-      `local`
-    );
-    console.log(this.detailsOrders, `arr`);
   }
   /////delete work item
   deleteItem(i: number) {
     this.detailsOrders = this.detailsService.getOrdersFromLocal(this.idOfOrder);
     this.detailsOrders.splice(i, 1);
     this.detailsService.setOrdersInLocal(this.detailsOrders, this.idOfOrder);
-    console.log(this.detailsOrders);
   }
   ////////to add new work item and open the form
   onClickAdd() {
@@ -145,5 +124,24 @@ export class DetailsComponent implements OnInit, OnDestroy {
     if (this.subscription.length > 0) {
       this.subscription.forEach((e) => e.unsubscribe());
     }
+  }
+
+  /////////storage the progress to localstorage then diplay it in header
+  saveProgress(): void {
+    let x = this.orderService.getOrdersFromLocal();
+    x.forEach((e) =>
+      e.id == this.idOfOrder ? (e.progress = this.currentOrder.progress) : null
+    );
+    this.orderService.setOrdersInLocal(x);
+    this.showInputProgress = false;
+  }
+
+  /////////// to initializeFormGroup the Form
+  initializeFormGroup(): void {
+    this.form = this.builder.group({
+      location: [``],
+      description: [``, Validators.required],
+      workItem: [``, Validators.required],
+    });
   }
 }

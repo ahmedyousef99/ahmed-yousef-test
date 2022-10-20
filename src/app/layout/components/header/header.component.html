@@ -3,6 +3,7 @@
     <div class="content">
       <h2 class="logo">Site engineers</h2>
       <ul>
+        <li *ngIf="!account.isPublic()" routerLink="/login">LogIn</li>
         <li *ngIf="account.isPublic()" (click)="logOut()">Log Out</li>
         <li *ngIf="account.isPublic()" class="mx-2" routerLink="orders">
           Orders

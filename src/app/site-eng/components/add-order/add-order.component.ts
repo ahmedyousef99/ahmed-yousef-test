@@ -52,13 +52,11 @@ export class AddOrderComponent implements OnInit, OnDestroy {
       startDate: [``, Validators.required],
       endDate: [``, Validators.required],
       progress: [``],
-      description: [``, Validators.required],
     });
   }
 
   onClickadd(): void {
     this.form.get(`progress`).setValue(0);
-    console.log(this.form.value);
     this.orderService.addOrder(this.form.value);
     this.router.navigate([`/orders/orders-list`]);
     this.toastr.success(`The order has been added`, `Add Order`);

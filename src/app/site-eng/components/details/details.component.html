@@ -1,136 +1,154 @@
-<div class="screen-holder">
-  <div class="mt-5">
-    <div class="prog">
-      <h3>{{ currentOrder.operationDescription }} :</h3>
-      <div class="">
-        <h3 class="text-danger">
-          <span class="text-light">Progress :</span>
-          {{ currentOrder.progress }}%
-        </h3>
-        <div class="d-flex">
-          <div
-            class="d-flex justify-content-start align-items-center"
-            *ngIf="showInputProgress"
-          >
-            <input
-              class="form-control input-progress"
-              type="number"
-              [(ngModel)]="currentOrder.progress"
-            />
-            <button
-              class="btn mx-2 btn-success"
-              (click)="showInputProgress = false"
-            >
-              Save
-            </button>
-          </div>
+<div class="mt-5 d-flex align-items-start justify-content-between">
+  <!-- /////// Start ===> Data Of Progress and input to change it from Foremen -->
+  <div class="prog mr-5" *ngIf="currentOrder">
+    <!-- ////////a hint to let the user know what is the order he stands on it -->
+    <h3>{{ currentOrder.operationDescription }}</h3>
+    <!-- ////////a hint to let the user know what is the order he stands on it -->
 
-          <button
-            class="btn btn-info"
-            [disabled]="canAdd"
-            (click)="showInputProgress = true"
-          >
-            Update Progress
-          </button>
-        </div>
+    <h3 class="text-danger">
+      <span class="text-light">Progress :</span>
+      {{ currentOrder.progress }}%
+    </h3>
+    <!-- //////////input and button for change the progress  -->
+    <div class="d-flex">
+      <div
+        class="d-flex justify-content-start align-items-center"
+        *ngIf="showInputProgress"
+      >
+        <input
+          class="form-control input-progress"
+          type="number"
+          [(ngModel)]="currentOrder.progress"
+        />
+        <button
+          [disabled]="currentOrder.progress > 100 || currentOrder.progress < 0"
+          class="btn mx-2 btn-success"
+          (click)="saveProgress()"
+        >
+          Save
+        </button>
       </div>
+      <!-- //////////input and button for change the progress  -->
+
+      <!-- ////////button to show and hide the iput field -->
+      <button
+        class="btn btn-info"
+        [disabled]="canAdd"
+        (click)="showInputProgress = true"
+      >
+        Update Progress
+      </button>
+      <!-- ////////button to show and hide the iput field -->
     </div>
-    <div class="tablee text-align-center">
+  </div>
+  <!-- /////// End ===> Data Of Progress and input to change it from Foremen -->
+
+  <!-- /////// Start ===> building the table to display orders header and action button for Add new order , Delete, Detils -->
+  <div class="table-responsive text-align-center col-8">
+    <div class="">
       <button
         (click)="onClickAdd()"
         [disabled]="!canAdd"
-        class="add-btn btn mt-2 btn-success"
+        class="btn btn-success"
       >
         Add New Item
       </button>
-      <table
-        border="1"
-        [cellPadding]="4"
-        [cellSpacing]="2"
-        class="styled-table"
-      >
-        <thead>
-          <tr>
-            <th scope="col">Work Item</th>
-            <th scope="col">Location</th>
-
-            <th scope="col">Description</th>
-
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of detailsOrders; let i = index">
-            <td>{{ item.workItem }}</td>
-            <td>{{ item.location.name }}</td>
-            <td>{{ item.description }}</td>
-
-            <td class="">
-              <button
-                [disabled]="!canAdd"
-                class="btn btn-danger"
-                (click)="deleteItem(i)"
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <button class="btn btn-info" (click)="onClickBackToHome()">
-        All Orders
-      </button>
     </div>
-  </div>
 
-  <div class="formss" *ngIf="showAddBtn">
-    <div class="mt-5 col-8 mx-auto">
-      <form class="mb-5" [formGroup]="form">
+    <table
+      border="1"
+      [cellPadding]="4"
+      [cellSpacing]="2"
+      class="styled-table col-12"
+    >
+      <thead>
+        <tr>
+          <th scope="col">Work Item</th>
+          <th scope="col">Location</th>
+
+          <th scope="col">Description</th>
+
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of detailsOrders; let i = index">
+          <td>{{ item.workItem }}</td>
+          <td>{{ item.location.name }}</td>
+          <td>{{ item.description }}</td>
+
+          <td class="">
+            <button
+              [disabled]="!canAdd"
+              class="btn btn-danger"
+              (click)="deleteItem(i)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-info" (click)="onClickBackToHome()">
+      All Orders
+    </button>
+  </div>
+  <!-- /////// End ===> building the table to display orders header and action button for Add new order , Delete, Detils -->
+</div>
+
+<!-- /////// Start ===> building the Form -->
+<div class="formss" *ngIf="showAddBtn">
+  <div class="mt-5 col-8 mx-auto">
+    <!-- //////for close the form -->
+    <i (click)="showAddBtn = false" class="gg-close btn-danger"></i>
+    <!-- //////for close the form -->
+
+    <form class="mb-5" [formGroup]="form">
+      <div>
         <div>
-          <div>
-            <label>Work Item*</label>
-            <input
-              type="text"
-              placeholder="Work Item "
-              formControlName="workItem"
+          <label>Work Item*</label>
+          <input
+            type="text"
+            placeholder="Work Item "
+            formControlName="workItem"
+            class="form-control"
+            name=""
+            id=""
+          />
+        </div>
+
+        <div class="select">
+          <app-drop-down-location
+            (selctedValue)="getSelect($event)"
+            [title]="'Select Location'"
+            [data]="listOfLocations"
+          ></app-drop-down-location>
+        </div>
+
+        <div>
+          <label for=""> Description</label>
+          <div class="">
+            <textarea
+              placeholder="Enter more description for details "
+              formControlName="description"
               class="form-control"
               name=""
               id=""
-            />
-          </div>
-
-          <div class="select">
-            <app-drop-down-location
-              (selctedValue)="getSelect($event)"
-              [title]="'Select Location'"
-              [data]="listOfLocations"
-            ></app-drop-down-location>
-          </div>
-
-          <div>
-            <label for=""> Description</label>
-            <div class="">
-              <textarea
-                placeholder="Enter more description for details "
-                formControlName="description"
-                class="form-control"
-                name=""
-                id=""
-              ></textarea>
-            </div>
-          </div>
-
-          <div class="mt-2">
-            <button
-              [disabled]="form.invalid"
-              class="btn btn-success"
-              (click)="onClickaddOrder()"
-            >
-              Add Order
-            </button>
+            ></textarea>
           </div>
         </div>
-      </form>
-    </div>
+
+        <div class="mt-2">
+          <button
+            [disabled]="form.invalid"
+            class="btn btn-success"
+            (click)="onClickaddOrder()"
+          >
+            Add Order
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
+<!-- /////// End ===> building the Form  -->

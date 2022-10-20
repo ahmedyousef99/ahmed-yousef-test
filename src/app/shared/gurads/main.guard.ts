@@ -24,7 +24,6 @@ export class MainGuard implements CanActivate {
     const arr = route.data[`role`].find(
       (e: any) => e == this.account.getUserRole()
     );
-    console.log(arr, `from gurad`);
     if (this.account.getUserRole() == arr) {
       let permission: string = route.data['permission'];
       if (this.account.isPermissions(permission)) {

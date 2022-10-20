@@ -26,21 +26,29 @@ export class ListOrdersComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getAllOrders();
 
+    /////////////authorization on buttons
     if (this.account.isSiteengineerRole()) {
       this.canAdd = true;
     } else {
       this.canAdd = false;
     }
+
+    //////// to avoid null in localStorage in the firts use
+    if (`orders` in localStorage) {
+      this.listOfOrders = this.ordersService.getOrdersFromLocal();
+    } else {
+      this.ordersService.setOrdersInLocal(this.listOfOrders);
+      this.listOfOrders = this.ordersService.getOrdersFromLocal();
+    }
   }
 
+  //////// to get all orders from backend
   getAllOrders(): void {
     var sub = this.ordersService.getOrders().subscribe(
       (res: Header[]) => {
         this.listOfOrders = res;
       },
-      (error) => {
-        console.log(error, `from getallorders`);
-      }
+      (error) => {}
     );
     this.subscription.push(sub);
   }
@@ -49,8 +57,9 @@ export class ListOrdersComponent implements OnInit, OnDestroy {
       this.subscription.forEach((e) => e.unsubscribe());
     }
   }
+
+  //////Delete orders from header
   onDelete(index: number) {
-    console.log(index);
     this.ordersService.getDelete(index);
     this.getAllOrders();
   }
